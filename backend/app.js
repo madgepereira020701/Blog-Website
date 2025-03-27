@@ -8,9 +8,9 @@ app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(bodyParser.json());
 app.use(express.json());
 
-const protect = require("./middleware/authmiddleware");
+const protect = require("./middlewares/auth_middleware");
 
-const auth = require("./controllers/auth_controllers");
+const auth = require("./controllers/auth_controller");
 const posts = require("./controllers/posts_controller");
 
 app.post("/register", protect, auth.register);
