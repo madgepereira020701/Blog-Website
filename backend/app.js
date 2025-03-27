@@ -24,5 +24,5 @@ app.delete("/posts/:title", protect, posts.deletepost);
 app.patch("/posts/:title", protect, posts.updatepost);
 
 app.listen(port, () => {
-  console.log(`Server running on http://localhost/${port}`);
+  console.log(`Server running on http://localhost:${port}`);
 });
