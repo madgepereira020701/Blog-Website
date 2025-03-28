@@ -13,8 +13,8 @@ const protect = require("./middlewares/auth_middleware");
 const auth = require("./controllers/auth_controller");
 const posts = require("./controllers/posts_controller");
 
-app.post("/register", protect, auth.register);
-app.post("/login", protect, auth.login);
+app.post("/register", auth.register);
+app.post("/login", auth.login);
 app.post("/passwordreset", protect, auth.passwordresetrequest);
 app.post("/updatepassword", protect, auth.updatePassword);
 
