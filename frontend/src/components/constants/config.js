@@ -24,5 +24,5 @@ export const API_NOTIFICATION_MESSAGES = {
 };
 
 export const SERVICE_URLS = {
-  userRegister: { url: "/register", method: "POST" },
+  userregister: { url: "/register", method: "POST" },
 };

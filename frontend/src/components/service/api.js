@@ -105,7 +105,7 @@ for (const [key, value] of Object.entries(SERVICE_URLS)) {
 }
 
 // Adding fetch-based methods to the same API object
-API.register = async (userData) => {
+API.userregister = async (userData) => {
   const response = await fetch("http://localhost:3000/register", {
     method: "POST",
     headers: { "Content-Type": "application/json" },

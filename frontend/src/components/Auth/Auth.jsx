@@ -80,17 +80,21 @@ const Auth = ({setisAuthenticated}) => {
             return;
         }
 
-        const response = API.register(register);
-        if(response.isSucess) {
+        try {
+        const response = await API.userregister(register);
+        if(response.isSuccess) {
             setRegister(registerInitialValues);
             toggleAccount('login');
             setError('');
         }
         else {
-            setError('');
-
+            setError('Something went wrong, try again.');
         }
-    }
+    } catch (err) {
+        setError('An error occurred. Please try again later.');
+        console.error('Error in registerUser:', err);
+      }
+    };
 
     const loginUser = async( ) => {
         if(!login.email || !login.password ) {
@@ -112,12 +116,13 @@ const Auth = ({setisAuthenticated}) => {
             setError('');
       }
          else {
-           setError('');
+            setError('Invalid credentials, please try again.');
 
         }
     }
-    catch (error) {
-        console.error(error);
+    catch (err) {
+        setError('An error occurred. Please try again later.');
+        console.error(err);
     }
 
 
