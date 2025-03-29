@@ -5,7 +5,7 @@ mongoose.connection.on("error", (err) => {
 });
 
 const mongoURI =
-  "mongodb+srv://blogs:blogs123@blogs.5ed1t.mongodb.net/?retryWrites=true&w=majority&appName=blogs";
+  "mongodb+srv://madgeblog:glob@blogs.5ed1t.mongodb.net/?retryWrites=true&w=majority&appName=blogs";
 
 const connectDB = async () => {
   try {

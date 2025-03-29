@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+
+const passwordRegex = /^(?=.*[!@#$%^&*(),.?":{}|<>]).+$/;  // At least one special character
+
+
 const adminSchema = new mongoose.Schema({
-  name: { type: String, required: true },
+  username: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true, unique: true },
   passwordResetToken: String,
@@ -33,4 +37,5 @@ adminSchema.methods.isValidPassword = async function (password) {
   return await bcrypt.compare(trimmedPassword, this.password);
 };
 
-module.exports = mongoose.model("admin", adminSchema);
+const Admin = mongoose.model("admin", adminSchema);
+module.exports = Admin;
