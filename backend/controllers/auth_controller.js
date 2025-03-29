@@ -18,7 +18,7 @@ const register = async (req, res) => {
     await newAdmin.save();
 
     return res
-      .status(200)
+      .status(201)
       .json({ isSuccess: true, message: "Admin created successfully" });
   } catch (error) {
     return res
@@ -47,7 +47,7 @@ const login = async (req, res) => {
       JWT_SECRET,
       { expiresIn: "1hr" }
     );
-    return res.status(200).json({ isSuccess: true, token });
+    return res.status(200).json({ isSuccess: true, data: {userName: admin.username, token} });
   } catch (error) {
     console.error(error);
     return res
@@ -75,7 +75,7 @@ const updatePassword = async (req, res) => {
 
     const foundUser = await Admin.findOne({
       passwordResetToken: token,
-      passwordResetTokenExpires: { $gt: Date.now() },
+      passwordResetExpires: { $gt: Date.now() },
     });
 
     if (!foundUser) {
@@ -95,16 +95,16 @@ const updatePassword = async (req, res) => {
       });
     }
 
-    foundUser.password = newpassword;
+    foundUser.password = newpassword.trim();
     foundUser.passwordResetToken = undefined;
-    foundUser.passwordResetTokenExpires = undefined;
+    foundUser.passwordResetExpires = undefined;
     await foundUser.save();
 
     return res
       .status(200)
       .json({ isSuccess: true, message: "Password updated successfully" });
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error(err);
     return res
       .status(500)
       .json({ isSuccess: false, message: "An error occured" });
@@ -120,14 +120,14 @@ function generatePasswordResetToken() {
 
 async function storeToken(email, token) {
   try {
-    const user = await Admin.findOne({ email });
+    const user = await Admin.findOne({ email: email });
     if (!user) {
       return res
         .status(400)
         .json({ isSuccess: false, message: "User not found" });
     }
     user.passwordResetToken = token;
-    user.passwordResetTokenExpires = Date.now() + 3600000;
+    user.passwordResetExpires = Date.now() + 3600000;
     await user.save();
 
     return res
