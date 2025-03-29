@@ -66,12 +66,12 @@ const ChangePassword = () => {
                     <h2>Change Password</h2>
                         {error && <div className='error'>{error}</div>}                
                     <div className="password-container">        
-                    <input type={showpassword ?'text' : 'password'} name='password' className='input-field' placeholder='Password' onChange={onInputChange}/><br/><br/>
+                    <input type={showpassword ?'text' : 'password'} name='newpassword' className='input-field' placeholder='New Password' onChange={onInputChange}/><br/><br/>
                         {warnings.newpassword && <div className='warnings'>{warnings.newpassword}</div>}<br/>
                         <span className='material-icons show-hide' onClick={togglePasswordVisibility}>{showpassword ? 'visibility' : 'visibility_off'}</span>
                     </div>    
                     <div className="password-container">        
-                    <input type={showpassword ?'text' : 'password'} name='password' className='input-field' placeholder='Password' onChange={onInputChange}/><br/><br/>
+                    <input type={showpassword ?'text' : 'password'} name='confirmpassword' className='input-field' placeholder='Confirm Password' onChange={onInputChange}/><br/><br/>
                         {warnings.confirmpassword && <div className='warnings'>{warnings.confirmpassword}</div>}<br/>
                         <span className='material-icons show-hide' onClick={togglePasswordVisibility}>{showpassword ? 'visibility' : 'visibility_off'}</span>
                     </div>    

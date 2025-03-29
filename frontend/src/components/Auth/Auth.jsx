@@ -136,9 +136,11 @@ const Auth = ({setisAuthenticated}) => {
             <input type='email' name='email' placeholder='Email' className='input-field' onChange={onValueChange}/><br/><br/>
                     {warnings.email && <div className='warnings'>{warnings.email}</div>}<br/>
                                             <p onClick={handleClick}>Forgot Password</p>
-            <input type='password' name='password' className='input-field' placeholder='Password' onChange={onValueChange}/><br/><br/>
+                                            <div className="password-container">
+            <input type={showpassword ?'text':'password'} name='password' className='input-field' placeholder='Password' onChange={onValueChange}/><br/><br/>
                     {warnings.password && <div className='warnings'>{warnings.password}</div>}<br/>
-
+                    <span className='material-icons show-hide' onClick={togglePasswordVisibility}>{showpassword ? 'visibility' : 'visibility_off'}</span>
+                    </div>
             <button onClick={loginUser}>Login</button><br/>
                         <p>or</p> 
             <button onClick={toggleSignup}>Register</button>
