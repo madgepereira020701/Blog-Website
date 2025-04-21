@@ -6,7 +6,7 @@ const registerInitialValues = { username:'', email:'', password:''};
 const loginInitialValues = { username:'', email:'', password:''};
 
 
-const Auth = ({setisAuthenticated}) => {
+const Auth = ({setIsAuthenticated}) => {
     const [register , setRegister] = useState(registerInitialValues);
     const [login , setLogin] = useState(loginInitialValues);
     const [account , toggleAccount] = useState('login');
@@ -108,9 +108,9 @@ const Auth = ({setisAuthenticated}) => {
         }
 
       try {
-       const response = API.login(login);
-         if(response.isSucess) {
-         setisAuthenticated(true);
+       const response = await API.userlogin(login);
+         if(response.isSuccess) {
+         setIsAuthenticated(true);
              localStorage.setItem('token', response.data.token);
              setRedirectToHome(true);
             setError('');
@@ -129,7 +129,7 @@ const Auth = ({setisAuthenticated}) => {
     }
 
     if(redirectToHome) {
-        <Navigate to = '/' replace />
+       return <Navigate to = '/addpost' replace />
     }
     
     return (

@@ -7,7 +7,7 @@ const passwordRegex = /^(?=.*[!@#$%^&*(),.?":{}|<>]).+$/;  // At least one speci
 const adminSchema = new mongoose.Schema({
   username: { type: String, required: true },
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
   passwordResetToken: String,
   passwordResetExpires: Date,
 });
@@ -27,7 +27,7 @@ adminSchema.pre("save", async function (next) {
     this.password = hashedPassword;
     next();
   } catch (err) {
-    console.log("Error hashing password:", err);
+    console.error("Error hashing password:", err);
     next(err);
   }
 });

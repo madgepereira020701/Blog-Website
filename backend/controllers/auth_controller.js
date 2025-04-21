@@ -28,7 +28,7 @@ const userregister = async (req, res) => {
   }
 };
 
-const login = async (req, res) => {
+const userlogin = async (req, res) => {
   const { email, password } = req.body;
   try {
     const admin = await Admin.findOne({ email });
@@ -37,7 +37,12 @@ const login = async (req, res) => {
         .status(400)
         .json({ isSuccess: false, message: "Invalid credentials" });
     }
+
+    console.log("Received login body:", req.body);
+
     const isValidPassword = await admin.isValidPassword(password);
+    console.log("Password valid:", isValidPassword); // NEW
+
     if (!isValidPassword) {
       return res
         .status(400)
@@ -200,4 +205,4 @@ async function sendPasswordResetEmail(email, token) {
   await storeToken(email, token);
 }
 
-module.exports = { userregister, login, updatePassword, passwordresetrequest };
+module.exports = { userregister, userlogin, updatePassword, passwordresetrequest };
