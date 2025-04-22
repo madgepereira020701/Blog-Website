@@ -1,0 +1,152 @@
+.nav {
+    background-color: orange;
+    text-align: left;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+    position: relative;
+}
+
+.other-dropdown-content {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.company-title {
+    margin-left: 20px;
+}
+
+.nav-links li {
+    list-style: none;
+}
+
+.nav .nav-links {
+    display: flex;
+}
+
+.nav-links li a {
+    color: black;
+    flex-direction: row;
+    margin: 0 0.5rem;
+    text-decoration: none;
+    padding: 0.7rem;
+    display: block;
+}
+
+.nav-links .account, .nav-links .others 
+    {
+    color: black;
+    flex-direction: row;
+    margin: 0 0.5rem;
+    text-decoration: none;
+    padding: 0.7rem;
+    display: block;
+}
+
+.nav-links li a:hover .dropdown li a:hover,
+.nav-links li a:hover .othersdropdown li a:hover,
+.nav-links li a.active .nav-links li a:active{
+    background-color: rgba(245, 194, 105, 0.931);
+    color: black;
+    border-radius: 4px;
+}
+
+.nav-links .account:hover,
+.nav-links .account.active,
+.nav-links .others:hover,
+.nav-links .others.active {
+    background-color: rgba(245, 194, 105, 0.931);
+    color: black;
+    border-radius: 4px;
+}
+
+.icon {
+    display: none;
+}
+
+.dropdown {
+    justify-content: space-evenly;
+    flex-direction: column;
+    position: absolute;
+    height: 8vh;
+    width: 200px;
+    background-color: rgba(242, 203, 136, 0.931);
+    top: 70px;
+    right: 0;
+    z-index: -10px;
+}
+
+.othersdropdown {
+    justify-content: space-evenly;
+    flex-direction: column;
+    position: absolute;
+    height: 15vh;
+    width: 200px;
+    background-color: rgba(242, 203, 136, 0.931);
+    top: 70px;
+    right: 0;
+    margin-right: 20px;
+    z-index: -10px;
+}
+
+@media (max-width: 768px) {
+    h2 {
+        margin-left: 30px;
+    }
+
+    .icon {
+        display: block;
+        margin-right: 10px;
+    }
+
+    .nav-links {
+        justify-content: space-evenly;
+        flex-direction: column;
+        position: absolute;
+        width: 250px;  /* Adjusted width for better fit */
+        background-color: rgba(242, 203, 136, 0.931);
+        top: -900px;
+        right: 0;
+        z-index: 10;
+        /* Make sure the nav links are scrollable only on small screens */
+        height: 80vh; /* Maintain height for normal screens */
+        overflow-y: auto; /* Allow scrolling */
+    }
+
+    .dropdown, .othersdropdown {
+        width: 90%;
+        left: 5%;
+        top: auto;
+        bottom: 70px;
+        height: auto;
+        max-height: 200px;
+        overflow-y: auto;
+    }
+ 
+
+    .nav-links.active {
+        top: 80px;
+    }
+
+    .nav-links li.others {
+        margin-bottom: 10px; /* Add some space below the account items */
+      }
+
+    .othersdropdown {
+        bottom: -8px;
+    }
+
+    .dropdown {
+        bottom: -28px;
+    }
+   
+
+    /* If the nav-links are active, adjust position */
+    .nav-links.active {
+        top: 80px;
+    }
+
+}

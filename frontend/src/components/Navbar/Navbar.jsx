@@ -54,46 +54,10 @@ const Navbar = () => {
         </h2>
       </div>
       <ul className={isOpen ? 'nav-links active' : 'nav-links'}>
-      {role === 'Admin' ? (
     <>
-      <li><NavLink to="/home" className={({ isActive }) => isActive ? 'active' : ''}>Home</NavLink></li>
-      <li><NavLink to="/attendance" className={({ isActive }) => isActive ? 'active' : ''}>Attendance</NavLink></li>
-      <li><NavLink to="/members" className={({ isActive }) => isActive ? 'active' : ''}>Add Members</NavLink></li>
-      <li><NavLink to="/viewmembers" className={({ isActive }) => isActive ? 'active' : ''}>Members</NavLink></li>
-      <li><NavLink to="/employees" className={({ isActive }) => isActive ? 'active' : ''}>Add Employees</NavLink></li>
-      <li><NavLink to="/viewemployees" className={({ isActive }) => isActive ? 'active' : ''}>Employees</NavLink></li>
-      <li><NavLink to="/calendar" className={({ isActive }) => isActive ? 'active' : ''}>Calendar</NavLink></li>
-      <li><NavLink to="/settings" className={({ isActive }) => isActive ? 'active' : ''}>Settings</NavLink></li>
-      <li className='others' onClick={toggleOthersDropDown}>
-        Others <FaAngleDown />
-        {isOthersDropDownOpen && (
-          <ul className="othersdropdown active : othersdropdown">
-            <div className="others-dropdown-container">
-            <li><NavLink to="/addplans" className={({ isActive }) => isActive ? 'active' : ''}>Package</NavLink></li>
-            <li><NavLink to="/adddepartments" className={({ isActive }) => isActive ? 'active' : ''}>Department</NavLink></li>
-            </div>
-          </ul>
-        )}
-      </li>
+      <li><NavLink to="/posts" className={({ isActive }) => isActive ? 'active' : ''}>Posts</NavLink></li>
+      <li><NavLink to="/addposts" className={({ isActive }) => isActive ? 'active' : ''}>Create Post</NavLink></li>
     </>
-  ) : role === 'Member' ? (
-    <>
-      <li><NavLink to="/home" className={({ isActive }) => isActive ? 'active' : ''}>Home</NavLink></li>
-      <li><NavLink to="/details" className={({ isActive }) => isActive ? 'active' : ''}>Details</NavLink></li>
-      <li><NavLink to="/check" className={({ isActive }) => isActive ? 'active' : ''}>Mark Attendance</NavLink></li>
-      <li><NavLink to="/memberattendance" className={({ isActive }) => isActive ? 'active' : ''}>Attendance</NavLink></li>
-      <li><NavLink to="/viewpayments" className={({ isActive }) => isActive ? 'active' : ''}>View Payments</NavLink></li>
-      <li><NavLink to="/memcalendar" className={({ isActive }) => isActive ? 'active' : ''}>Calendar</NavLink></li>
-    </>
-  ) : role === 'Employee' ? (
-    <>
-      <li><NavLink to="/home" className={({ isActive }) => isActive ? 'active' : ''}>Home</NavLink></li>
-      <li><NavLink to="/employeedetails" className={({ isActive }) => isActive ? 'active' : ''}>Details</NavLink></li>
-      <li><NavLink to="/employeeattendance" className={({ isActive }) => isActive ? 'active' : ''}>Attendance</NavLink></li>
-      <li><NavLink to="/check" className={({ isActive }) => isActive ? 'active' : ''}>Mark Attendance</NavLink></li>
-      <li><NavLink to="/emcalendar" className={({ isActive }) => isActive ? 'active' : ''}>Calendar</NavLink></li>
-    </>
-  ) : null}
         <li className="account" onClick={toggleDropDown}>
           {userinitials ? userinitials : 'Guest'} <FaAngleDown />
           {isDropDownOpen && (
