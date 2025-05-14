@@ -1,0 +1,46 @@
+.form-container {
+    width: 500px;
+    border: 3px solid black;
+    border-radius: 5px;
+    background-color: white;
+    padding: 20px;
+    margin-left: 380px;
+    margin-top: 10px;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.1);
+}
+
+
+
+button {
+    background-color: violet;
+}
+
+.input-field {
+    padding: 15px;
+    width: 90%;
+    border-radius: 5px;
+}
+
+
+
+.warnings, .error {
+    color: red;
+}
+
+span{
+    color: black;
+}
+
+/* learn */
+.show-hide {
+    position: absolute;
+    top: 30%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.password-container {
+    position: relative;
+    width: 100%;
+}
