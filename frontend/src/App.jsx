@@ -1,35 +1,55 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
+import './App.css';
+import Auth from './components/Auth/Auth';
+import ChangePassword from './components/ChangePassword/ChangePassword';
+import PostForm from './components/PostForm/PostForm';
+import Posts from './components/Posts/Posts';
+import Navbar from './components/Navbar/Navbar';
+import React, { useState } from 'react';
+import ViewPost from './components/ViewPost/ViewPost';
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem('token') !== null);
+  const [userName, setUserName] = useState(localStorage.getItem('userName') || '');
+
 
   return (
     <>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+           <BrowserRouter>
+           {isAuthenticated && (
+          <Navbar
+            isAuthenticated={isAuthenticated}
+            userName={userName}
+            setIsAuthenticated={setIsAuthenticated}
+          />
+        )}
+
+           <Routes>
+           <Route
+            path="/"
+            element={
+              isAuthenticated ? (
+                <Navigate to="/posts" />
+              ) : (
+                <Auth
+                  setIsAuthenticated={setIsAuthenticated}
+                  setUserName={setUserName}
+                />
+              )
+            }
+          />
+
+            <Route path="/changepassword" element={<ChangePassword/>}/>
+            <Route path="/addpost" element={<PostForm/>}/>
+            <Route path="/posts" element={<Posts/>}/>
+            <Route path="/post/:title" element={<ViewPost />}/>
+           </Routes>
+           </BrowserRouter>
+        </div>
     </>
   )
 }
 
-export default App
+export default App;
