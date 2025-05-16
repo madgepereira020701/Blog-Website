@@ -84,7 +84,7 @@
   }
   
   button:hover {
-    background-color: orange;
+    background-color: rgb(180, 238, 19);
   }
   
   button:active {
@@ -136,4 +136,13 @@
   .post-table-wrapper {
     grid-template-columns: 1fr; /* Stack cards vertically */
   }
+}
+
+
+.actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+  flex-wrap: wrap; /* Optional: allows wrapping on smaller screens */
 }
