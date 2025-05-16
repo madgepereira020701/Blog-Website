@@ -1,5 +1,5 @@
 .nav {
-    background-color: orange;
+    background-color: rgb(239, 87, 239);
     text-align: left;
     display: flex;
     width: 100%;
@@ -56,9 +56,10 @@
 
 .nav-links .account:hover,
 .nav-links .account.active,
+.nav-links .active,
 .nav-links .others:hover,
 .nav-links .others.active {
-    background-color: rgba(245, 194, 105, 0.931);
+    background-color: rgba(238, 129, 227, 0.931);
     color: black;
     border-radius: 4px;
 }
@@ -73,7 +74,7 @@
     position: absolute;
     height: 8vh;
     width: 200px;
-    background-color: rgba(242, 203, 136, 0.931);
+    background-color: rgba(237, 129, 223, 0.931);
     top: 70px;
     right: 0;
     z-index: -10px;
@@ -107,7 +108,7 @@
         flex-direction: column;
         position: absolute;
         width: 250px;  /* Adjusted width for better fit */
-        background-color: rgba(242, 203, 136, 0.931);
+        background-color: rgba(242, 136, 233, 0.931);
         top: -900px;
         right: 0;
         z-index: 10;
