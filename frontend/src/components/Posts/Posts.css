@@ -132,3 +132,8 @@
     font-size: 20px;
   }
   
+  @media screen and (max-width: 768px) {
+  .post-table-wrapper {
+    grid-template-columns: 1fr; /* Stack cards vertically */
+  }
+}
