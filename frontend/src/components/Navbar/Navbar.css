@@ -59,7 +59,7 @@
 .nav-links .active,
 .nav-links .others:hover,
 .nav-links .others.active {
-    background-color: rgb(199, 236, 99);
+    background-color: rgb(220, 235, 178);
     color: black;
     border-radius: 4px;
 }
@@ -106,7 +106,7 @@
     .nav-links {
         flex-direction: column;
         position: absolute;
-        width: 250px;  /* Adjusted width for better fit */
+        width: 130px;  /* Adjusted width for better fit */
         background-color: rgb(220, 235, 178);
         top: -900px;
         right: 0;
@@ -128,6 +128,16 @@
         overflow-y: auto;
     }
  
+
+    .nav-links .account:hover,
+.nav-links .account.active,
+.nav-links .active,
+.nav-links .others:hover,
+.nav-links .others.active {
+    background-color: rgb(199, 236, 99);
+    color: black;
+    border-radius: 4px;
+}
 
     .nav-links.active {
         top: 80px;
