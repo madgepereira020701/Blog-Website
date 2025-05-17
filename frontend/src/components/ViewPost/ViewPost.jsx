@@ -97,6 +97,16 @@ const ViewPost = () => {
       if (!response.ok) throw new Error(result.message || 'Update failed');
 
       setPost(result.data);
+      setPost({
+  ...post,
+  title: editData.title,
+  content: editData.content,
+  image: editData.image instanceof File
+    ? await convertToBase64(editData.image)
+    : editData.image,
+});
+setIsEditing(false);
+
       setIsEditing(false);
       alert('Post updated successfully!');
     } catch (err) {
