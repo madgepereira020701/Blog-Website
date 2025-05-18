@@ -170,14 +170,17 @@ const Posts = () => {
           <div className="post-table-wrapper">
   {posts.map((post) => (
     <div key={post._id} className="post-card">
-      <p>{post.title}</p>
       {post.image && <img src={post.image} alt="Post" width="250" />}
+      <div className='wrapper'>
+            <p>{post.title}</p>
+          <div className='truncate-multiline'dangerouslySetInnerHTML={{ __html: post.content }} />
       <p>{formatDate(post.createdAt)}</p>
       <div className="actions">
         <button className="membutton" onClick={() => handleView(post.title)}>View</button>
         <button className="membutton" onClick={() => handleEdit(post)}>Edit</button>
         <button className="membutton" onClick={() => handleDeletePost(post.title)}>Delete</button>
       </div>
+    </div>  
     </div>
   ))}
 </div>

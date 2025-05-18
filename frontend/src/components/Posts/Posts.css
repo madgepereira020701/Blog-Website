@@ -60,6 +60,36 @@
     text-overflow: ellipsis;
     overflow: hidden;
   }
+
+.truncate-multiline {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  line-height: 1.5em;
+  max-height: 4.5em; /* 3 lines × 1.5em */
+  white-space: normal;
+  word-break: break-word;
+  position: relative;
+}
+
+.truncate-multiline::after {
+  content: '...';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding-left: 10px;
+  background: linear-gradient(to right, transparent, white 50%);
+}
+
+.post-title {
+  font-family: 'Georgia', serif;     /* Or 'Arial', 'Poppins', etc. */
+  font-size: 1.5rem;                 /* Adjust as needed */
+  font-weight: 600;                  /* Bold but smoother than b/strong */
+  margin-bottom: 0.5rem;
+  color: #333;                       /* Optional: control color */
+}
+
+
   
   .postbutton {
     padding: 10px;
@@ -70,6 +100,33 @@
     color: white;
     cursor: pointer;
     width: 100%; /* Ensures buttons take full width of the cell */
+  }
+
+  .post-card {
+    padding: 0 15px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    gap: 2rem;
+  }
+
+  .post-table-wrapper {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .post-table-wrapper {
+    grid-template-columns: 1fr; /* Stack cards vertically */
+  }
+}
+
+
+  .wrapper {
+    flex: 1;
   }
   
   .big {
