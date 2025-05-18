@@ -55,7 +55,7 @@ app.post("/updatepassword", protect, updatePassword);
 app.post("/posts", protect1, posts.addpost);
 app.get("/posts", protect1, posts.getpost);
 app.delete("/posts/:title", protect1, posts.deletepost);
-app.patch("/posts/:title", protect1, posts.updatepost);
+app.patch("/posts/:_id", protect1, posts.updatepost);
 app.get("/post/:title", protect1, posts.postdetails);
 
 

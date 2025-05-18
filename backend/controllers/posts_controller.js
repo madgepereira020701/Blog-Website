@@ -160,43 +160,33 @@ const deletepost = async (req, res) => {
 
 // ✅ Update Post
 const updatepost = async (req, res) => {
-  upload(req, res, async (err) => {
-    if (err) {
-      console.error("Multer upload error:", err);
-      return res.status(500).json({ message: "Failed to upload image", error: err });
+  try {
+    const postId = req.params._id;
+    const { content, image, title } = req.body;
+    const author = req.user;
+
+    if (!author) {
+      return res.status(400).json({ message: "Author doesn't exist" });
     }
 
-    try {
-      const { title } = req.params;
-      const { content } = req.body;
-      const author = req.user;
+    const updatedData = { content, title, image };
 
-      if (!author) {
-        return res.status(400).json({ message: "Author doesn't exist" });
-      }
+    const updatedPost = await Post.findOneAndUpdate(
+      { _id: postId, author },
+      updatedData,
+      { new: true }
+    );
 
-      const updatedData = { content };
-
-      if (req.file) {
-        updatedData.image = `http://localhost:3000/uploads/${req.file.filename}`;
-      }
-
-      const updatedPost = await Post.findOneAndUpdate(
-        { title, author},
-        updatedData,
-        { new: true }
-      );
-
-      if (!updatedPost) {
-        return res.status(404).json({ message: "Post not found" });
-      }
-
-      return res.status(200).json({ message: "Post updated successfully", post: updatedPost });
-    } catch (error) {
-      console.error("Error in updatepost:", error);
-      return res.status(500).json({ message: "Server error", error });
+    if (!updatedPost) {
+      return res.status(404).json({ message: "Post not found" });
     }
-  });
+
+    return res.status(200).json({ message: "Post updated successfully", data: updatedPost });
+  } catch (error) {
+    console.error("Error in updatepost:", error);
+    return res.status(500).json({ message: "Server error", error });
+  }
 };
+
 
 module.exports = { addpost, getpost, deletepost, updatepost, postdetails };
