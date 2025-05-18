@@ -6,3 +6,11 @@
 .post-details {
     text-align: center;
 }
+
+.createdat {
+    margin-left: 400px;
+}
+
+.post-details button{
+    margin-top: 40px;
+}

@@ -71,6 +71,28 @@ const ViewPost = () => {
       reader.onerror = () => reject(new Error('Image conversion failed'));
     });
 
+      const formatDate= (isoDateStr) => {
+    const date = new Date(isoDateStr);
+  
+    const datePart = date.toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    });
+  
+    const timePart = date.toLocaleTimeString('en-GB', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    });
+    return (
+      <>
+        {datePart} <span style={{ margin: '0 10px' }}></span> {timePart}
+      </>
+    );
+  };
+    
+
   const updatePost = async () => {
     const token = localStorage.getItem('token');
     if (!token) return;
@@ -126,6 +148,9 @@ setIsEditing(false);
           {post.image && <img src={post.image} alt="Post" className="post-img" />}
           <div dangerouslySetInnerHTML={{ __html: post.content }} />
           <button onClick={() => setIsEditing(true)}>Edit</button>
+                <p>Last Modified: {formatDate(post.lastModifiedDate)} <span className='createdat'>Created: {formatDate(post.createdAt)}</span></p>
+
+
         </div>
       )}
 

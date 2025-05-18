@@ -6,7 +6,6 @@
 .post-table-wrapper {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 columns */
   gap: 20px; /* space between posts */
 }
 
@@ -83,7 +82,7 @@
 
 .post-title {
   font-family: 'Georgia', serif;     /* Or 'Arial', 'Poppins', etc. */
-  font-size: 1.5rem;                 /* Adjust as needed */
+  font-size: 2rem;                 /* Adjust as needed */
   font-weight: 600;                  /* Bold but smoother than b/strong */
   margin-bottom: 0.5rem;
   color: #333;                       /* Optional: control color */
@@ -103,18 +102,15 @@
   }
 
   .post-card {
-    padding: 0 15px;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-around;
-    gap: 2rem;
+    gap: 1rem;
   }
 
   .post-table-wrapper {
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
 }
 
@@ -202,4 +198,12 @@
   justify-content: center;
   margin-top: 10px;
   flex-wrap: wrap; /* Optional: allows wrapping on smaller screens */
+}
+
+
+@media screen and (max-width: 695px) {
+
+img{
+  width: 250px;
+}
 }

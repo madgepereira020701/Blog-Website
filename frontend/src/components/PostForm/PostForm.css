@@ -1,6 +1,5 @@
 .form-container {
     width: 100%;
-    max-width: 310px;
     border: 3px solid black;
     border-radius: 5px;
     background-color: white;
@@ -66,3 +65,22 @@ textarea {
         border-width: 2px;
     }
 }
+
+@media screen and (max-width: 768px) {
+    .form-container {
+  width: 310px;
+}
+}
+
+@media screen and (max-width: 480px ) {
+    .form-container {
+  width: 290px;
+}
+}
+
+@media screen and (max-width: 392px ) {
+    .form-container {
+  width: 270px;
+}
+}
+
