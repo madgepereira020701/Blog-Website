@@ -10,7 +10,10 @@ const ViewPost = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({ title: '', content: '', image: null });
   const quillRef = useRef(null);
+  const [postId, setPostId] = useState(null);
   const { title } = useParams();
+    const { _id } = useParams();
+
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -27,10 +30,13 @@ const ViewPost = () => {
         const data = await response.json();
         setPost(data.data);
         setEditData({
+          _id: data.data._id,
           title: data.data.title,
           content: data.data.content,
           image: data.data.image || null,
         });
+          setPostId(data.data._id); // store the id here
+
       } catch (err) {
         setError(err.message);
       }
@@ -58,10 +64,13 @@ const ViewPost = () => {
     setEditData((prev) => ({ ...prev, content: value }));
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) setEditData((prev) => ({ ...prev, image: file }));
-  };
+const handleImageChange = async (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    const base64 = await convertToBase64(file);
+    setEditData((prev) => ({ ...prev, image: base64 }));
+  }
+};
 
   const convertToBase64 = (file) =>
     new Promise((resolve, reject) => {
@@ -93,49 +102,39 @@ const ViewPost = () => {
   };
     
 
-  const updatePost = async () => {
-    const token = localStorage.getItem('token');
-    if (!token) return;
+const updatePost = async () => {
+  const token = localStorage.getItem('token');
+  if (!token || !postId) return;
 
-    try {
-      const base64Image = editData.image instanceof File
-        ? await convertToBase64(editData.image)
-        : editData.image;
+  try {
+    const base64Image = editData.image;
 
-      const response = await fetch(`http://localhost:3000/posts/${title}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          title: editData.title,
-          content: editData.content,
-          image: base64Image,
-        }),
-      });
+    const response = await fetch(`http://localhost:3000/posts/${postId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        title: editData.title,
+        content: editData.content,
+        image: base64Image,
+      }),
+      
+    });
 
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.message || 'Update failed');
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.message || 'Update failed');
 
-      setPost(result.data);
-      setPost({
-  ...post,
-  title: editData.title,
-  content: editData.content,
-  image: editData.image instanceof File
-    ? await convertToBase64(editData.image)
-    : editData.image,
-});
-setIsEditing(false);
+    setPost(result.data);
+    setIsEditing(false);
+    alert('Post updated successfully!');
+  } catch (err) {
+    console.error('Update error:', err);
+    setError('Error updating the post.');
+  }
+};
 
-      setIsEditing(false);
-      alert('Post updated successfully!');
-    } catch (err) {
-      console.error('Update error:', err);
-      setError('Error updating the post.');
-    }
-  };
 
   return (
     <div className="table-container">
@@ -156,10 +155,19 @@ setIsEditing(false);
 
       {isEditing && (
         <div className="edit-post-form">
-          {/* <input type="file" accept="image/*" onChange={handleImageChange} />
+                      <input
+                type="text"
+                name="title"
+                className="input-field"
+                placeholder="Title"
+                onChange={handleInputChange}
+                value={editData.title}
+            /><br /><br />
+
+          <input type="file" accept="image/*" onChange={handleImageChange} />
           {editData.image && !(editData.image instanceof File) && (
             <img src={editData.image} alt="Preview" className="post-img" />
-          )} */}
+          )} 
           <ReactQuill
             ref={quillRef}
             value={editData.content}
