@@ -148,7 +148,7 @@ const Posts = () => {
   
     return (
       <>
-        {datePart} <span style={{ margin: '0 250px' }}></span> {timePart}
+        {datePart} <span style={{ margin: '0 15px' }}></span> {timePart}
       </>
     );
   };
