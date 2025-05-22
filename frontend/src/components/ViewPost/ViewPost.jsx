@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
 import ReactQuill from 'react-quill';
+import { useParams, useLocation } from 'react-router-dom';
 import 'react-quill/dist/quill.snow.css';
 import './ViewPost.css';
 
@@ -10,6 +10,7 @@ const ViewPost = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({ title: '', content: '', image: null });
   const quillRef = useRef(null);
+  const [loading, setLoading] = useState(true);
   const [postId, setPostId] = useState(null);
   const { title } = useParams();
     const { _id } = useParams();
@@ -36,9 +37,10 @@ const ViewPost = () => {
           image: data.data.image || null,
         });
           setPostId(data.data._id); // store the id here
-
+          setLoading(false);
       } catch (err) {
         setError(err.message);
+        setLoading(false);
       }
     };
 
@@ -54,6 +56,15 @@ const ViewPost = () => {
       ['clean'],
     ],
   };
+
+  const location = useLocation();
+
+useEffect(() => {
+  if (location.state && location.state.editMode) {
+    setIsEditing(true);
+  }
+}, [location.state]);
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -139,21 +150,24 @@ const updatePost = async () => {
   return (
     <div className="table-container">
       <h2>Post Details</h2>
+      {isEditing && loading && <p>Loading post data...</p>}
       {error && <p className="error-message">{error}</p>}
 
       {!isEditing && post && (
         <div className="post-details">
-          <h3>{post.title}</h3>
+          <div className="post-header">
+  <h3>{post.title}</h3>
+  <button className="edit-button" onClick={() => setIsEditing(true)}>Edit</button>
+  </div>
           {post.image && <img src={post.image} alt="Post" className="post-img" />}
           <div dangerouslySetInnerHTML={{ __html: post.content }} />
-          <button onClick={() => setIsEditing(true)}>Edit</button>
                 <p>Last Modified: {formatDate(post.lastModifiedDate)} <span className='createdat'>Created: {formatDate(post.createdAt)}</span></p>
 
 
         </div>
       )}
 
-      {isEditing && (
+      {isEditing && !loading && (
         <div className="edit-post-form">
                       <input
                 type="text"

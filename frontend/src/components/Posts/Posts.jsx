@@ -46,15 +46,10 @@ const Posts = () => {
     fetchPosts();
   }, []);
 
-  const handleNavigation = (route) => {
-    navigate(route);
-  };
+
 
   const handleEdit = (post) => {
-    setEditingPost(post);
-    setUpdatedDetails({
-      content: post.content || '',
-    });
+  navigate(`/post/${post.title}`, { state: { editMode: true } });
   };
 
   const handleUpdateChange = (e) => {
@@ -148,7 +143,7 @@ const Posts = () => {
   
     return (
       <>
-        {datePart} <span style={{ margin: '0 15px' }}></span> {timePart}
+        {datePart} <span style={{ margin: '0 10px' }}></span> {timePart}
       </>
     );
   };
@@ -170,17 +165,14 @@ const Posts = () => {
           <div className="post-table-wrapper">
   {posts.map((post) => (
     <div key={post._id} className="post-card">
-      {post.image && <img src={post.image} alt="Post" width="300" />}
-      <div className='wrapper'>
-            <p className='post-title'>{post.title}</p>
-          <div className='truncate-multiline'dangerouslySetInnerHTML={{ __html: post.content }} />
-      <p>Last Modified: {formatDate(post.lastModifiedDate)}</p>
+      <p>{post.title}</p>
+      {post.image && <img src={post.image} alt="Post" width="250" />}
+      <p>{formatDate(post.lastModifiedDate)}</p>
       <div className="actions">
         <button className="membutton" onClick={() => handleView(post.title)}>View</button>
         <button className="membutton" onClick={() => handleEdit(post)}>Edit</button>
         <button className="membutton" onClick={() => handleDeletePost(post.title)}>Delete</button>
       </div>
-    </div>  
     </div>
   ))}
 </div>
