@@ -14,6 +14,8 @@
     "@tiptap/react": "^2.11.7",
     "axios": "^1.9.0",
     "bootstrap": "^5.3.5",
+    "date-fns": "^4.1.0",
+    "lucide-react": "^0.511.0",
     "multer": "^1.4.5-lts.2",
     "quill": "^2.0.3",
     "react": "^18.2.0",

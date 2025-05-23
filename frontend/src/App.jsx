@@ -7,6 +7,7 @@ import Posts from './components/Posts/Posts';
 import Navbar from './components/Navbar/Navbar';
 import React, { useState } from 'react';
 import ViewPost from './components/ViewPost/ViewPost';
+import PostHistory from './components/PostHistory/PostHistory';
 
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
             <Route path="/addpost" element={<PostForm/>}/>
             <Route path="/posts" element={<Posts/>}/>
             <Route path="/post/:title" element={<ViewPost />}/>
+            <Route path="/post/:id/history" element={<PostHistory />}/>
            </Routes>
            </BrowserRouter>
         </div>

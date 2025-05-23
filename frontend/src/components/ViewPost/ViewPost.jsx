@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactQuill from 'react-quill';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import 'react-quill/dist/quill.snow.css';
 import './ViewPost.css';
 
@@ -14,39 +14,42 @@ const ViewPost = () => {
   const [postId, setPostId] = useState(null);
   const { title } = useParams();
     const { _id } = useParams();
+const location = useLocation();
+
+    const navigate = useNavigate();
 
 
-  useEffect(() => {
-    const fetchPost = async () => {
-      const token = localStorage.getItem('token');
-      if (!token) return;
-
-      try {
-        const response = await fetch(`http://localhost:3000/post/${title}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        if (!response.ok) throw new Error('Failed to fetch post details');
-
-        const data = await response.json();
-        setPost(data.data);
-        setEditData({
-          _id: data.data._id,
-          title: data.data.title,
-          content: data.data.content,
-          image: data.data.image || null,
-        });
+    useEffect(() => {
+      const fetchPost = async () => {
+        const token = localStorage.getItem('token');
+        if (!token) return;
+    
+        try {
+          const response = await fetch(`http://localhost:3000/post/${title}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+    
+          if (!response.ok) throw new Error('Failed to fetch post details');
+    
+          const data = await response.json();
+          setPost(data.data);
+          setEditData({
+            _id: data.data._id,
+            title: data.data.title,
+            content: data.data.content,
+            image: data.data.image || null,
+          });
           setPostId(data.data._id); // store the id here
           setLoading(false);
-      } catch (err) {
-        setError(err.message);
-        setLoading(false);
-      }
-    };
-
-    if (title) fetchPost();
-  }, [title]);
-
+        } catch (err) {
+          setError(err.message);
+          setLoading(false);
+        }
+      };
+    
+      if (title) fetchPost();
+    }, [title]);
+    
   const modules = {
     toolbar: [
       [{ header: [1, 2, false] }],
@@ -57,7 +60,6 @@ const ViewPost = () => {
     ],
   };
 
-  const location = useLocation();
 
 useEffect(() => {
   if (location.state && location.state.editMode) {
@@ -158,6 +160,17 @@ const updatePost = async () => {
           <div className="post-header">
   <h3>{post.title}</h3>
   <button className="edit-button" onClick={() => setIsEditing(true)}>Edit</button>
+  <button
+  onClick={() =>
+    navigate(`/post/${post._id}/history`, {
+      state: { title: post.title }
+    })
+  }
+  className="history-button"
+>
+  History
+</button>
+
   </div>
           {post.image && <img src={post.image} alt="Post" className="post-img" />}
           <div dangerouslySetInnerHTML={{ __html: post.content }} />
