@@ -27,11 +27,15 @@ const addpost = async (req, res) => {
 
     // Validate required fields
     if (!author) {
-      return res.status(401).json({ message: "Invalid or missing token. Author not found." });
+      return res
+        .status(401)
+        .json({ message: "Invalid or missing token. Author not found." });
     }
 
     if (!title || !content) {
-      return res.status(400).json({ message: "Title and content are required." });
+      return res
+        .status(400)
+        .json({ message: "Title and content are required." });
     }
 
     let imageUrl = "";
@@ -40,7 +44,9 @@ const addpost = async (req, res) => {
       const matches = image.match(/^data:image\/([a-zA-Z0-9+]+);base64,(.+)$/);
 
       if (!matches || matches.length !== 3) {
-        return res.status(400).json({ message: "Invalid base64 image format." });
+        return res
+          .status(400)
+          .json({ message: "Invalid base64 image format." });
       }
 
       const extension = matches[1];
@@ -61,7 +67,7 @@ const addpost = async (req, res) => {
       title,
       content,
       image: imageUrl,
-      author // Ensure it's just the ID
+      author, // Ensure it's just the ID
     });
 
     await newPost.save();
@@ -72,12 +78,11 @@ const addpost = async (req, res) => {
     });
   } catch (error) {
     console.error("Error in addpost:", error);
-    return res.status(500).json({ message: "Server error", error: error.message });
+    return res
+      .status(500)
+      .json({ message: "Server error", error: error.message });
   }
 };
-
-
-
 
 // ✅ Get Posts (by author)
 // ✅ Get Posts (by author)
@@ -86,7 +91,9 @@ const getpost = async (req, res) => {
     const author = req.user;
 
     if (!author) {
-      return res.status(400).json({ message: "Author doesn't exist or invalid token" });
+      return res
+        .status(400)
+        .json({ message: "Author doesn't exist or invalid token" });
     }
 
     const posts = await Post.find({ author: author });
@@ -112,20 +119,23 @@ const postdetails = async (req, res) => {
     const post = await Post.findOne({ title });
 
     if (!post) {
-      return res.status(404).json({ status: 'ERROR', message: 'Member not found' });
+      return res
+        .status(404)
+        .json({ status: "ERROR", message: "Member not found" });
     }
 
     // Send the JSON response
     res.status(200).json({
-      status: 'SUCCESS',
+      status: "SUCCESS",
       data: post,
     });
   } catch (error) {
-    console.error('Error fetching payment details:', error);
-    res.status(500).json({ status: 'ERROR', message: 'Error fetching payment details' });
+    console.error("Error fetching payment details:", error);
+    res
+      .status(500)
+      .json({ status: "ERROR", message: "Error fetching payment details" });
   }
 };
-
 
 // ✅ Delete Post
 const deletepost = async (req, res) => {
@@ -169,24 +179,62 @@ const updatepost = async (req, res) => {
       return res.status(400).json({ message: "Author doesn't exist" });
     }
 
-    const updatedData = { content, title, image };
-
-    const updatedPost = await Post.findOneAndUpdate(
-      { _id: postId, author },
-      updatedData,
-      { new: true }
-    );
-
-    if (!updatedPost) {
+    const post = await Post.findOne({ _id: postId, author });
+    if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
 
-    return res.status(200).json({ message: "Post updated successfully", data: updatedPost });
+    const changedFields = [];
+
+    // Compare and update fields
+    if (title && title !== post.title) {
+      post.title = title;
+      changedFields.push("title");
+    }
+    if (content && content !== post.content) {
+      post.content = content;
+      changedFields.push("content");
+    }
+    if (image && image !== post.image) {
+      post.image = image;
+      changedFields.push("image");
+    }
+
+    // Add to history if anything changed
+    if (changedFields.length > 0) {
+      post.modificationHistory.push({
+        modifiedAt: new Date(),
+        updatedFields: changedFields,
+      });
+    }
+
+    await post.save();
+
+    return res
+      .status(200)
+      .json({ message: "Post updated successfully", data: post });
   } catch (error) {
     console.error("Error in updatepost:", error);
     return res.status(500).json({ message: "Server error", error });
   }
 };
 
+const gethistory = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) return res.status(404).json({ message: "Post not found" });
 
-module.exports = { addpost, getpost, deletepost, updatepost, postdetails };
+    res.json({ history: post.modificationHistory || [] });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+module.exports = {
+  addpost,
+  getpost,
+  deletepost,
+  updatepost,
+  postdetails,
+  gethistory,
+};

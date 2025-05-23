@@ -10,6 +10,14 @@ const postSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+
+    // ⬇️ New field to track modification history
+    modificationHistory: [
+      {
+        modifiedAt: { type: Date, default: Date.now },
+        updatedFields: [String], // optional: fields that changed
+      },
+    ],
   },
   {
     timestamps: { createdAt: "createdAt", updatedAt: "lastModifiedDate" },
