@@ -84,8 +84,7 @@ const addpost = async (req, res) => {
   }
 };
 
-// ✅ Get Posts (by author)
-// ✅ Get Posts (by author)
+// Get Posts (by author)
 const getpost = async (req, res) => {
   try {
     const author = req.user;
@@ -137,7 +136,7 @@ const postdetails = async (req, res) => {
   }
 };
 
-// ✅ Delete Post
+//  Delete Post
 const deletepost = async (req, res) => {
   try {
     const { title } = req.params;
@@ -168,7 +167,7 @@ const deletepost = async (req, res) => {
   }
 };
 
-// ✅ Update Post
+// Update Post
 const updatepost = async (req, res) => {
   try {
     const postId = req.params._id;
@@ -219,6 +218,7 @@ const updatepost = async (req, res) => {
   }
 };
 
+// Get Post History
 const gethistory = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
