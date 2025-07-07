@@ -1,40 +1,35 @@
-.post-img {
-    width: 500px;
-    height: 500px;
+/* Post header with title centered */
+.post-header {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-.post-details {
-    text-align: center;
+/* Post title */
+.post-header h3 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+/* Buttons below the title */
+.button-row {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
 }
 
 .createdat {
-    margin-left: 400px;
+  margin-left: 60px;
 }
 
-.post-details button{
-    margin-top: 40px;
-}
 
-.post-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.post-header h3 {
-  margin: 0;
-  font-size: 1.5rem;
-}
-
-.edit-button {
-  margin-right: 100px;
-  border: none;
-  border-radius: 4px;
+.edit-button,
+.history-button {
+  padding: 8px 16px;
+  font-size: 0.95rem;
   cursor: pointer;
+  color: white;
+  border: none;
+  border-radius: 5px;
 }
 
-
-.post-header h3 {
-    margin-left: 600px;
-}

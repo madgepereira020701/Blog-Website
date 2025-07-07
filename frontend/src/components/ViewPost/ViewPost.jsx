@@ -159,18 +159,19 @@ const updatePost = async () => {
         <div className="post-details">
           <div className="post-header">
   <h3>{post.title}</h3>
+  <div className='button-row'>
   <button className="edit-button" onClick={() => setIsEditing(true)}>Edit</button>
   <button
-  onClick={() =>
-    navigate(`/post/${post._id}/history`, {
-      state: { title: post.title }
-    })
-  }
-  className="history-button"
->
-  History
-</button>
-
+    onClick={() =>
+      navigate(`/post/${post._id}/history`, {
+        state: { title: post.title }
+      })
+    }
+    className="history-button"
+  >
+    History
+  </button>
+  </div>
   </div>
           {post.image && <img src={post.image} alt="Post" className="post-img" />}
           <div dangerouslySetInnerHTML={{ __html: post.content }} />
