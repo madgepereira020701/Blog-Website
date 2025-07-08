@@ -5,8 +5,8 @@ mongoose.connection.on("error", (err) => {
 });
 
 const mongoURI =
-  "mongodb+srv://madgeblog:glob@blogs.5ed1t.mongodb.net/?retryWrites=true&w=majority&appName=blogs";
-
+  "mongodb+srv://<db.username>:<db.password>@blogs.5ed1t.mongodb.net/?retryWrites=true&w=majority&appName=blogs";
+//add your own password and username you generated in Mongodb. 
 const connectDB = async () => {
   try {
     await mongoose.connect(mongoURI, {
