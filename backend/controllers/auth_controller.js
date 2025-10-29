@@ -184,12 +184,12 @@ async function sendPasswordResetEmail(email, token) {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: 'madgepereira020701@gmail.com',
-      pass: 'xezg tgdr tods jpbc', // Use an app-specific password for Gmail
+      user: '',
+      pass: '', // Use an app-specific password for Gmail
       },
   });
 
-  const resetLink = `http://localhost:3001/changepassword?token=${token}`;
+  const resetLink = `${FRONTEND_UR}/changepassword?token=${token}`;
 
   const mailOptions = {
     from: "madgepereira020701@gmail.com",
