@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = 'mysecretkey';
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // Middleware to verify token
 const protect = async (req, res, next) => {
